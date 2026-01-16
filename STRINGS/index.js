@@ -1,99 +1,26 @@
-console.log("This is the STRINGS index file.");
 
-// Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
-
-// An input string is valid if:
-
-// Open brackets must be closed by the same type of brackets.
-// Open brackets must be closed in the correct order.
-// Every close bracket has a corresponding open bracket of the same type.
 
 
 // Example 1:
 
-// Input: s = "()"
+// Input: haystack = "sadbutsad", needle = "sad"
+// Output: 0
+// Explanation: "sad" occurs at index 0 and 6.
+// The first occurrence is at index 0, so we return 0.
 
-// Output: true
+var strStr = function(haystack, needle) {
+    if(!haystack.includes(needle)) return -1
 
-// Example 2:
+    return haystack.indexOf(needle);
+};
 
-// Input: s = "()[]{}"
 
-// Output: true
 
-// Example 3:
-
-// Input: s = "(]"
-
-// Output: false
-
-// Example 4:
-
-// Input: s = "([])"
-
-// Output: true
-
-// Example 5:
-
-// Input: s = "([)]"
-
-// Output: false
-
-   let s = "([)]"
-
-     if (s.length % 2 !== 0) return false;
- 
-
-    const pairs = {
-        ')': '(',
-        ']': '[',
-        '}': '{'
-    };
-
-    const stack = [];
-
-    for (let char of s) {
-        if (char === '(' || char === '[' || char === '{') {
-            stack.push(char);
-        } else {
-            console.log("stack-----",stack , "vvvvvvvvvv",pairs[char] );
-            if (stack.length === 0 || stack.pop() !== pairs[char]) {
-                return false;
-            }
-        }
-    }
+let haystack = "sadbutsad"
+let needle = "sad"
+let res = strStr(haystack, needle)
+console.log(res)
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-// var isValid = function(s) {
-//     const stack = [];
-//     const pairs = {
-//         ')': '(',
-//         '}': '{',
-//         ']': '['
-//     };
-
-//     for (let i = 0; i < s.length; i++) {
-//         const char = s[i];
-//         if (char === '(' || char === '{' || char === '[') {
-//             stack.push(char);
-//         } else {
-//             if (stack.length === 0 || stack.pop() !== pairs[char]) {
-//                 return false;
-//             }
-//         }
-//     }
-
-//     return stack.length === 0;
-// };

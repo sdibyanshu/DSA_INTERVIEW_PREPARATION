@@ -164,3 +164,71 @@ const searchString = "abcgsheths";
 const target = "het";
 
 console.log(findTargetIndex(searchString, target)); // Output: [5]
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+Problem 3
+
+/**
+ * Given a string `s` containing only the characters
+ * '(', ')', '{', '}', '[' and ']',
+ * determine if the input string is valid.
+ *
+ * Rules:
+ * 1. Open brackets must be closed by the same type of brackets.
+ * 2. Open brackets must be closed in the correct order.
+ * 3. Every closing bracket must have a corresponding opening bracket.
+ *
+ * Examples:
+ * "()[]"      → true
+ * "()[]{}"    → true
+ * "(]"        → false
+ * "([])"      → true
+ * "([)]"      → false
+ */
+
+var isValid = function (s) {
+    // If length is odd, it can never be valid
+    if (s.length % 2 !== 0) return false;
+
+    // Mapping of closing brackets to opening brackets
+    const pairs = {
+        ')': '(',
+        ']': '[',
+        '}': '{'
+    };
+
+    // Stack to store opening brackets
+    const stack = [];
+
+    // Traverse each character in the string
+    for (let char of s) {
+        // If it is an opening bracket, push to stack
+        if (char === '(' || char === '[' || char === '{') {
+            stack.push(char);
+        } 
+        // If it is a closing bracket
+        else {
+            // Stack empty or mismatch found
+            if (stack.length === 0 || stack.pop() !== pairs[char]) {
+                return false;
+            }
+        }
+    }
+
+    // If stack is empty, all brackets matched correctly
+    return stack.length === 0;
+};
+
+
+⏱ Time Complexity
+O(n)
+
+We iterate through the string once.
+🧠 Space Complexity
+O(n)
+
+In the worst case, all opening brackets are stored in the stack.
+✅ Key Interview Explanation (Short)
+This solution uses a stack to ensure brackets are closed in the correct order. Each closing bracket must match the most recent opening bracket.
