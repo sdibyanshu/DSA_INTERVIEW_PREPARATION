@@ -484,4 +484,113 @@ n = length of jewels
 m = length of stones
 
 Space Complexity: O(n) for the Set
-grg
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Problem 10
+
+// Find the vowel (one of 'a', 'e', 'i', 'o', or 'u') with the maximum frequency.
+// Find the consonant (all other letters excluding vowels) with the maximum frequency.
+// Return the sum of the two frequencies.
+
+// Note: If multiple vowels or consonants have the same maximum frequency, you may choose any one of them. If there are no vowels or no consonants in the string , consider their frequency as 0. 
+
+// The frequency of a letter x is the number of times it occurs in the string . 
+// Example 1:
+
+// Input: s = "successes" 
+
+// Output: 6
+
+// Explanation:
+
+// The vowels are: 'u' (frequency 1), 'e' (frequency 2). The maximum frequency is 2.
+// The consonants are: 's' (frequency 4), 'c' (frequency 2). The maximum frequency is 4.
+// The output is 2 + 4 = 6.
+ 
+
+ var maxFreqSum = function(string) {
+  let vowels = "aeiou";
+  let vowelMaxFreq = 0;
+  let nonVowelMaxFreq = 0;
+  let freq = new Map();
+
+  // Frequency count
+  for (let ch of string) {
+    freq.set(ch, (freq.get(ch) || 0) + 1);
+  }
+
+  // Find max vowel & consonant frequency
+  for (let [key, value] of freq) {
+    if (vowels.includes(key)) {
+      vowelMaxFreq = Math.max(vowelMaxFreq, value);
+    } else {
+      nonVowelMaxFreq = Math.max(nonVowelMaxFreq, value);
+    }
+  }
+
+  return vowelMaxFreq + nonVowelMaxFreq;
+};
+
+------------------------------------------------------------------------------------------------------------------------
+
+Problem 11 
+
+// Balanced strings are those that have an equal quantity of 'L' and 'R' characters.
+
+// Given a balanced string s, split it into some number of substrings such that:
+
+// Each substring is balanced.
+// Return the maximum number of balanced strings you can obtain.
+
+ 
+
+// Example 1:
+
+// Input: s = "RLRRLLRLRL"
+// Output: 4
+// Explanation: s can be split into "RL", "RRLL", "RL", "RL", each substring contains same number of 'L' and 'R'.
+// Example 2:
+
+// Input: s = "RLRRRLLRLL"
+// Output: 2
+// Explanation: s can be split into "RL", "RRRLLRLL", each substring contains same number of 'L' and 'R'.
+// Note that s cannot be split into "RL", "RR", "RL", "LR", "LL", because the 2nd and 5th substrings are not balanced.
+// Example 3:
+
+// Input: s = "LLLLRRRR"
+// Output: 1
+// Explanation: s can be split into "LLLLRRRR".
+ 
+
+var balancedStringSplit = function(s) {
+    let count = 0;
+    let balance = 0;
+
+    for (let i = 0; i < s.length; i++) {
+        console.log("Char:", s[i]);
+
+        if (s[i] === "L") {
+            balance++;
+        } else if (s[i] === "R") {
+            balance--;
+        }
+
+        console.log("Balance:", balance);
+
+        if (balance === 0) {
+            count++;
+            console.log("Balanced found, count:", count);
+        }
+    }
+
+    console.log("Final count:", count);
+    return count;
+};
+
+⏱ Complexity
+
+Time: O(n)
+
+Space: O(1)
