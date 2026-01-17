@@ -104,7 +104,7 @@ console.log(longestCommonPrefix2(["flower", "flow", "flight"])); // Output: "fl"
 
 
 ----------------------------------------------------------------------------------------------------
-Problem 2
+Problem 3
 
 
 /**
@@ -168,7 +168,7 @@ console.log(findTargetIndex(searchString, target)); // Output: [5]
 
 ---------------------------------------------------------------------------------------------------------------------
 
-Problem 3
+Problem 4
 
 /**
  * Given a string `s` containing only the characters
@@ -232,3 +232,256 @@ O(n)
 In the worst case, all opening brackets are stored in the stack.
 ✅ Key Interview Explanation (Short)
 This solution uses a stack to ensure brackets are closed in the correct order. Each closing bracket must match the most recent opening bracket.
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+Problem 5
+
+Input: haystack = "sadbutsad", needle = "sad"
+Output: 0
+Explanation: The substring "sad" occurs at index 0 and 6 in haystack. The first occurrence is at index 0.
+
+
+var strStr = function(haystack, needle) {
+    if(!haystack.includes(needle)) return -1
+
+    return haystack.indexOf(needle);
+};
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+LEARN
+
+// 1. at(index): Returns character at given index; supports negative indexing
+let str = "Hello, World!";
+console.log(str.at(1));   // Output: "e"
+console.log(str.at(-1));  // Output: "!"
+
+// 2. charAt(index): Returns character at given index; no negative indexing
+console.log(str.charAt(1));   // Output: "e"
+console.log(str.charAt(-1));  // Output: "" (empty string)
+
+// 5. slice(start, end): Extracts substring from start up to (but not including) end; supports negative indexes
+console.log(str.slice(7, 12));   // Output: "World"
+console.log(str.slice(-6, -1));  // Output: "World"
+
+// 6. substring(start, end): Like slice but treats negatives as 0 and swaps start/end if start > end
+console.log(str.substring(7, 12));   // Output: "World"
+console.log(str.substring(12, 7));   // Output: "World" (swapped)
+console.log(str.substring(-3, 5));   // Output: "Hello" (negative treated as 0)
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+// 1. includes(searchString): Returns true if string contains the specified text
+let str = "Hello, World!";
+console.log(str.includes("World"));  // Output: true
+console.log(str.includes("world"));  // Output: false (case-sensitive)
+
+// 2. startsWith(searchString): Checks if string begins with the specified substring
+console.log(str.startsWith("Hello"));  // Output: true
+console.log(str.startsWith("world"));  // Output: false
+
+// 3. endsWith(searchString): Checks if string ends with the specified substring
+console.log(str.endsWith("!"));      // Output: true
+console.log(str.endsWith("World"));  // Output: false
+
+// 4. indexOf(searchString): Returns the index of first occurrence, or -1 if not found
+console.log(str.indexOf("o"));    // Output: 4 (first 'o' in "Hello")
+console.log(str.indexOf("World")); // Output: 7
+console.log(str.indexOf("world")); // Output: -1 (case-sensitive)
+
+// 5. lastIndexOf(searchString): Returns index of last occurrence, or -1 if not found
+console.log(str.lastIndexOf("o"));    // Output: 8 (last 'o' in "World")
+
+
+------------------------------------------------------------------------------------------------------------------
+
+// 1. toLowerCase(): Converts entire string to lowercase
+let str = "Hello, World!";
+console.log(str.toLowerCase());  // Output: "hello, world!"
+
+// 2. toUpperCase(): Converts entire string to uppercase
+console.log(str.toUpperCase());  // Output: "HELLO, WORLD!"
+
+// 3. toLocaleLowerCase(): Locale-aware lowercase conversion (e.g., Turkish)
+console.log(str.toLocaleLowerCase('tr')); // Output depends on locale
+
+// 4. toLocaleUpperCase(): Locale-aware uppercase conversion
+console.log(str.toLocaleUpperCase('tr')); // Output depends on locale
+
+// 5. trim(): Removes whitespace from both ends of the string
+let paddedStr = "   Hello, World!   ";
+console.log(paddedStr.trim());    // Output: "Hello, World!"
+
+// 6. trimStart(): Removes whitespace only from the start
+console.log(paddedStr.trimStart()); // Output: "Hello, World!   "
+
+// 7. trimEnd(): Removes whitespace only from the end
+console.log(paddedStr.trimEnd());   // Output: "   Hello, World!"
+
+// 8. padStart(length, padString): Pads string from the start until length is reached
+let num = "5";
+console.log(num.padStart(3, "0")); // Output: "005"
+
+// 9. padEnd(length, padString): Pads string from the end until length is reached
+console.log(num.padEnd(3, "*"));   // Output: "5**"
+
+// 10. repeat(count): Returns new string with original repeated count times
+let repeatStr = "abc";
+console.log(repeatStr.repeat(3));  // Output: "abcabcabc"
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+// 1. replace(pattern, replacement): Replaces first occurrence matching pattern (string or regex)
+let str = "foo bar foo";
+console.log(str.replace("foo", "baz"));    // Output: "baz bar foo"
+console.log(str.replace(/foo/g, "baz"));   // Output: "baz bar baz"
+
+// 2. replaceAll(pattern, replacement): Replaces all occurrences matching pattern (string or global regex)
+console.log(str.replaceAll("foo", "baz")); // Output: "baz bar baz"
+console.log(str.replaceAll(/foo/g, "baz"));// Output: "baz bar baz"
+
+// 3. split(separator): Splits string into an array using the separator
+let csv = "apple,banana,cherry";
+console.log(csv.split(","));  // Output: ["apple", "banana", "cherry"]
+
+// 4. concat(...strings): Concatenates two or more strings
+let s1 = "Hello";
+let s2 = "World";
+console.log(s1.concat(", ", s2, "!"));  // Output: "Hello, World!"
+// Similar to: s1 + ", " + s2 + "!"
+
+
+--------------------------------------------------------------------------------------------------------------------
+Problem 7
+
+Length of Last Word
+Problem Statement
+
+
+/** Given a string s consisting of words and spaces,
+return the length of the last word in the string.
+
+A word is a maximal substring consisting of
+non-space characters only.
+
+Example 1:
+Input: s = "Hello World"
+Output: 5
+Explanation: The last word is "World" with length 5.
+
+Example 2:
+Input: s = "   fly me   to   the moon  "
+Output: 4
+Explanation: The last word is "moon" with length 4.
+
+Example 3:
+Input: s = "luffy is still joyboy"
+Output: 6
+Explanation: The last word is "joyboy" with length 6.
+*/
+
+
+Solution (JavaScript)
+
+var lengthOfLastWord = function(s) {
+    return s.trim().split(" ").pop().length;
+};
+
+Time and Space Complexity
+
+Time Complexity: O(n) — where n is the length of the string.
+
+Space Complexity: O(n) — due to splitting the string into an array.
+
+
+
+----------------------------------------------------------------------------------------------------------------------
+Problem 8
+
+// Input: words = ["abc","bcd","aaaa","cbc"], x = "a"
+// Output: [0,2]
+// Explanation: "a" occurs in "abc", and "aaaa". Hence, we return indices 0 and 2.
+
+
+var findWordsContaining = function(words, x) {
+    let res = [];
+    for (let i = 0; i < words.length; i++) {
+        if (words[i].includes(x)) {
+            res.push(i);
+        }
+    }
+    return res;
+};
+Time Complexity
+includes(x) → O(m) (length of each word)
+
+Loop runs n times
+
+👉 Total: O(n * m)
+
+-------------------------------------------------------------------------------------------------------------------
+
+Problem 9
+
+You're given strings jewels representing the types of stones that are jewels, and stones representing the stones you have. Each character in stones is a type of stone you have. You want to know how many of the stones you have are also jewels.
+
+Letters are case sensitive, so "a" is considered a different type of stone from "A".
+
+Example 1:
+
+Input: jewels = "aA", stones = "aAAbbbb"
+Output: 3
+Example 2:
+
+Input: jewels = "z", stones = "ZZ"
+Output: 0
+
+You are given two strings:
+
+jewels → characters that are considered valuable
+
+stones → characters that you own
+
+👉 Each character represents one stone
+👉 You must count how many stones are jewels
+
+⚠️ Case-sensitive
+
+"a" ≠ "A"
+
+
+✅ Optimal Approach (Using Set)
+Why Set?
+
+Fast lookup → O(1)
+
+Best for checking membership
+
+var numJewelsInStones = function(jewels, stones) {
+    let jewelSet = new Set(jewels);
+    let count = 0;
+
+    for (let stone of stones) {
+        if (jewelSet.has(stone)) {
+            count++;
+        }
+    }
+    return count;
+};
+
+⏱ Time & Space Complexity
+
+Time Complexity: O(n + m)
+
+n = length of jewels
+
+m = length of stones
+
+Space Complexity: O(n) for the Set
+grg
