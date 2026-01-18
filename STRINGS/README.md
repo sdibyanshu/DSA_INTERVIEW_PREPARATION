@@ -594,3 +594,144 @@ var balancedStringSplit = function(s) {
 Time: O(n)
 
 Space: O(1)
+
+
+
+-------------------------------------------------------------------------------------------------
+
+// Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+// You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+// You can return the answer in any order.
+
+ 
+
+// Example 1:
+
+// Input: nums = [2,7,11,15], target = 9
+// Output: [0,1]
+// Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+// Example 2:
+
+// Input: nums = [3,2,4], target = 6
+// Output: [1,2]
+// Example 3:
+
+// Input: nums = [3,3], target = 6
+// Output: [0,1]
+
+
+var twoSum = function(nums, target) {
+    const map = new Map(); // value -> index
+    console.log("Initial Map:", map);
+
+    for (let i = 0; i < nums.length; i++) {
+        console.log("\n---------------------");
+        console.log("Current index i:", i);
+        console.log("Current value nums[i]:", nums[i]);
+
+        const complement = target - nums[i];
+        console.log("Complement needed:", complement);
+
+        console.log("Map before check:", map);
+
+        if (map.has(complement)) {
+            console.log(
+                "Complement found in map!",
+                "Complement index:", map.get(complement),
+                "Current index:", i
+            );
+            return [map.get(complement), i];
+        }
+
+        console.log("Complement NOT found, storing current value in map");
+        map.set(nums[i], i);
+        console.log("Map after storing:", map);
+    }
+};
+
+let res = twoSum([2, 7, 11, 15], 9);
+console.log("\nFinal Result:", res);
+
+
+Time Complexity: O(n)
+
+Space Complexity: O(n)
+
+
+-------------------------------------------------------------------------------------------------------------
+
+// Given an alphanumeric string s, return the second largest numerical digit that appears in s, or -1 if it does not exist.
+
+// An alphanumeric string is a string consisting of lowercase English letters and digits.
+
+ 
+
+// Example 1:
+
+// Input: s = "dfa12321afd"
+// Output: 2
+// Explanation: The digits that appear in s are [1, 2, 3]. The second largest digit is 2.
+// Example 2:
+
+// Input: s = "abc1111"
+// Output: -1
+// Explanation: The digits that appear in s are [1]. There is no second largest digit. 
+
+
+var secondHighest = function(s) {
+    let max = -Infinity;
+    let secondMax = -Infinity;
+
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] >= '0' && s[i] <= '9') {
+            let num = Number(s[i]);
+
+            if (num > max) {
+                secondMax = max;
+                max = num;
+            } else if (num > secondMax && num < max) {
+                secondMax = num;
+            }
+        }
+    }
+
+    return secondMax === -Infinity ? -1 : secondMax;
+};
+
+
+let res = secondHighest("dfa12321afd");
+console.log(res); // 2
+
+
+⏱ Complexity
+
+Time: O(n)
+
+Space: O(1)
+
+
+var secondHighest = function(s) {
+    const set = new Set();
+
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] >= '0' && s[i] <= '9') {
+            set.add(Number(s[i]));
+        }
+    }
+
+    const arr = [...set];
+    arr.sort((a, b) => b - a);
+
+    return arr.length >= 2 ? arr[1] : -1;
+};
+
+console.log(secondHighest("dfa12321afd")); // 2
+
+
+🎯 Interview Tip
+
+Say:
+
+“Since digits are limited (0–9), using a Set and sorting is safe and simple.”
