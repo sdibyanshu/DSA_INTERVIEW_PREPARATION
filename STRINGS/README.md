@@ -735,3 +735,199 @@ console.log(secondHighest("dfa12321afd")); // 2
 Say:
 
 “Since digits are limited (0–9), using a Set and sorting is safe and simple.”
+
+
+--------------------------------------------------------------------------------------------------------------
+
+// Given an integer x, return true if x is a palindrome, and false otherwise.
+
+ 
+
+// Example 1:
+
+// Input: x = 121
+// Output: true
+// Explanation: 121 reads as 121 from left to right and from right to left.
+// Example 2:
+
+// Input: x = -121
+// Output: false
+// Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+// Example 3:
+
+// Input: x = 10
+// Output: false
+// Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+
+var isPalindrome = function(x) {
+  let str = x.toString();
+  let rev = str.split("").reverse().join("");
+  return str === rev;
+};
+
+let result = isPalindrome(121);
+console.log("Res", result);
+
+
+
+function isPalindrome(str) {
+  // Convert input to string (works for number + string both)
+  str = String(str);
+  let len = str.length;
+
+  for (let i = 0; i < len / 2; i++) {
+    let leftChar = str[i];
+    let rightChar = str[len - 1 - i];
+
+    console.log("i =", i);
+    console.log("Left Index:", i, "Left Char:", leftChar);
+    console.log("Right Index:", len - 1 - i, "Right Char:", rightChar);
+
+    if (leftChar !== rightChar) {
+      console.log("❌ Mismatch Found! Not a Palindrome");
+      return false;
+    }
+
+    console.log("✅ Match Found, continue checking...");
+  }
+
+  console.log("🎉 All characters matched! It is a Palindrome");
+  return true;
+}
+
+let result = isPalindrome(12144121);
+console.log("Final Result:", result);
+
+
+
+
+var isPalindrome = function(x) {
+  if (x < 0) return false;
+
+  let original = x;
+  let reversed = 0;
+
+  while (x > 0) {
+    let digit = x % 10;
+    reversed = reversed * 10 + digit;
+    x = Math.floor(x / 10);
+  }
+
+  return original === reversed;
+};
+
+let result = isPalindrome(121);
+console.log("Res", result);
+
+-----------------------------------------------------------------------------------------------------
+
+function countNegatives(arr) {
+  if (!Array.isArray(arr)) return false;
+  let count = 0;
+  for (let i = 0; i < arr.length; i++) {
+    let val = arr[i];
+    if (typeof val !== "number" || !Number.isFinite(val)) {
+      return false;
+    }
+    if (val < 0) count++;
+  }
+
+  return count;
+}
+
+
+-------------------------------------------------------------------------------------------------------------
+
+find the smallest number from array
+
+Constraints
+
+Input must be an array of finite numbers
+Return false for non-array inputs
+Return false for arrays containing non-number values
+Return false for arrays containing NaN, Infinity, or -Infinity
+For an empty array, return null
+
+
+Test Cases
+
+Base case: empty array [] -> null, single [x] -> x
+Mixed arrays: [3, 1, 2], [-5, 2, -3, 4]
+All negatives: [-1, -2, -3]
+All positives: [1, 2, 3]
+Decimals: [-1.5, -0.1, 0, 2.2]
+Invalid inputs: null, undefined, 42, '8', {}, () => {}, [1, 'a'], [NaN], [Infinity]
+
+
+function findSmallest(arr) {
+  // Return false for non-array inputs
+  if (!Array.isArray(arr)) return false;
+
+  // For empty array, return null
+  if (arr.length === 0) return null;
+
+  let min = Infinity;
+
+  for (let i = 0; i < arr.length; i++) {
+    let val = arr[i];
+
+    // Return false for non-number OR NaN/Infinity/-Infinity
+    if (typeof val !== "number" || !Number.isFinite(val)) {
+      return false;
+    }
+
+    // Update minimum
+    if (val < min) min = val;
+  }
+
+  return min;
+}
+
+----------------------------------------------------------------------------------------------------------------
+
+
+704. Binary Search
+Easy
+Topics
+premium lock icon
+Companies
+Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+ 
+
+Example 1:
+
+Input: nums = [-1,0,3,5,9,12], target = 9
+Output: 4
+Explanation: 9 exists in nums and its index is 4
+Example 2:
+
+Input: nums = [-1,0,3,5,9,12], target = 2
+Output: -1
+Explanation: 2 does not exist in nums so return -1
+
+
+var search = function(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+
+    if (nums[mid] === target) {
+      return mid; // found
+    } 
+    else if (nums[mid] < target) {
+      left = mid + 1; // search right side
+    } 
+    else {
+      right = mid - 1; // search left side
+    }
+  }
+
+  return -1; // not found
+};
+
+
