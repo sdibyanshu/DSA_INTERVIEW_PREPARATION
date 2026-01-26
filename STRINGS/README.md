@@ -931,3 +931,120 @@ var search = function(nums, target) {
 };
 
 
+-------------------------------------------------------------------------------------------------------
+
+Given an array of integers nums, sort the array in ascending order and return it.
+
+You must solve the problem without using any built-in functions in O(nlog(n)) time complexity and with the smallest space complexity possible.
+
+ 
+
+Example 1:
+
+Input: nums = [5,2,3,1]
+Output: [1,2,3,5]
+Explanation: After sorting the array, the positions of some numbers are not changed (for example, 2 and 3), while the positions of other numbers are changed (for example, 1 and 5).
+Example 2:
+
+Input: nums = [5,1,1,2,0,0]
+Output: [0,0,1,1,2,5]
+Explanation: Note that the values of nums are not necessarily unique.
+
+
+var sortArray = function(nums) {
+  // Merge Sort function
+  function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+
+    let mid = Math.floor(arr.length / 2);
+    let left = mergeSort(arr.slice(0, mid));
+    let right = mergeSort(arr.slice(mid));
+
+    return merge(left, right);
+  }
+
+  // Merge 2 sorted arrays
+  function merge(left, right) {
+    let result = [];
+    let i = 0, j = 0;
+
+    while (i < left.length && j < right.length) {
+      if (left[i] <= right[j]) {
+        result.push(left[i]);
+        i++;
+      } else {
+        result.push(right[j]);
+        j++;
+      }
+    }
+
+    // remaining elements
+    while (i < left.length) result.push(left[i++]);
+    while (j < right.length) result.push(right[j++]);
+
+    return result;
+  }
+
+  return mergeSort(nums);
+};
+
+let result = sortArray([5,1,1,2,0,0]);
+console.log(result); // [0,0,1,1,2,5]
+
+---------------------------------------------------------------------------------------------------------
+
+// Given an integer n, return true if it is a power of two. Otherwise, return false.
+
+// An integer n is a power of two, if there exists an integer x such that n == 2x.
+
+ 
+
+// Example 1:
+
+// Input: n = 1
+// Output: true
+// Explanation: 20 = 1
+// Example 2:
+
+// Input: n = 16
+// Output: true
+// Explanation: 24 = 16
+// Example 3:
+
+// Input: n = 3
+// Output: false
+ 
+
+ var isPowerOfTwo = function(n) {
+  if (n <= 0) return false;
+  return (n & (n - 1)) === 0;
+};
+
+
+
+
+function isPowerOf(n, base) {
+  if (n <= 0) return false;
+  if (base <= 1) return false; // base must be >= 2
+
+  while (n % base === 0) {
+    n = n / base;
+  }
+
+  return n === 1;
+}
+
+// Power of 2
+console.log(isPowerOf(16, 2)); // true
+console.log(isPowerOf(18, 2)); // false
+
+// Power of 3
+console.log(isPowerOf(27, 3)); // true
+console.log(isPowerOf(45, 3)); // false
+
+
+⏱️ Complexity
+
+Time: O(log_base(n))
+
+Space: O(1)
