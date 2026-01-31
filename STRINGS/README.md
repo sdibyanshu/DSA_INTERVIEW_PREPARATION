@@ -1048,3 +1048,401 @@ console.log(isPowerOf(45, 3)); // false
 Time: O(log_base(n))
 
 Space: O(1)
+
+-----------------------------------------------------------------------------------------
+Custom Judge:
+
+The judge will test your solution with the following code:
+
+int[] nums = [...]; // Input array
+int[] expectedNums = [...]; // The expected answer with correct length
+
+int k = removeDuplicates(nums); // Calls your implementation
+
+assert k == expectedNums.length;
+for (int i = 0; i < k; i++) {
+    assert nums[i] == expectedNums[i];
+}
+If all assertions pass, then your solution will be accepted.
+
+ 
+Example 1:
+
+Input: nums = [1,1,2]
+Output: 2, nums = [1,2,_]
+Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+Example 2:
+
+Input: nums = [0,0,1,1,1,2,2,3,3,4]
+Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+It does not matter what you leave beyond the returned k (hence they are underscores).
+ 
+
+Constraints:
+
+1 <= nums.length <= 3 * 104
+-100 <= nums[i] <= 100
+nums is sorted in non-decreasing order.
+
+var removeDuplicates = function(nums) {
+  if (nums.length === 0) return 0;
+
+  let k = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (i === 0 || nums[i] !== nums[i - 1]) {
+      nums[k] = nums[i];
+      k++;
+    }
+  }
+
+  return k;
+};
+
+⏱️ Time Complexity
+O(n)
+💾 Space Complexity
+O(1) (Constant space)
+
+----------------------------------------------------------------------------------------------------------------
+
+// Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+
+// Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:
+
+// Change the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.
+// Return k.
+// Custom Judge:
+
+// The judge will test your solution with the following code:
+
+// int[] nums = [...]; // Input array
+// int val = ...; // Value to remove
+// int[] expectedNums = [...]; // The expected answer with correct length.
+//                             // It is sorted with no values equaling val.
+
+// int k = removeElement(nums, val); // Calls your implementation
+
+// assert k == expectedNums.length;
+// sort(nums, 0, k); // Sort the first k elements of nums
+// for (int i = 0; i < actualLength; i++) {
+//     assert nums[i] == expectedNums[i];
+// }
+// If all assertions pass, then your solution will be accepted.
+
+ 
+
+// Example 1:
+
+// Input: nums = [3,2,2,3], val = 3
+// Output: 2, nums = [2,2,_,_]
+// Explanation: Your function should return k = 2, with the first two elements of nums being 2.
+// It does not matter what you leave beyond the returned k (hence they are underscores).
+// Example 2:
+
+// Input: nums = [0,1,2,2,3,0,4,2], val = 2
+// Output: 5, nums = [0,1,4,0,3,_,_,_]
+// Explanation: Your function should return k = 5, with the first five elements of nums containing 0, 0, 1, 3, and 4.
+// Note that the five elements can be returned in any order.
+// It does not matter what you leave beyond the returned k (hence they are underscores).
+ 
+
+// Constraints:
+
+// 0 <= nums.length <= 100
+// 0 <= nums[i] <= 50
+// 0 <= val <= 100
+ 
+ 
+ 
+var removeElement = function(nums, val) {
+  let k = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+
+    console.log("----");
+    console.log("i (read):", i);
+    console.log("k (write):", k);
+    console.log("nums[i]:", nums[i]);
+
+    if (nums[i] !== val) {
+      console.log("✔ keep element, overwrite at index", k);
+
+      nums[k] = nums[i];
+      k++;
+
+      console.log("array now:", nums);
+    } else {
+      console.log("❌ element == val, skip");
+    }
+  }
+
+  console.log("FINAL k:", k);
+  console.log("FINAL array (valid part):", nums.slice(0, k));
+
+  return k;
+};
+
+let k = removeElement([3,2,2,3], 3);
+console.log("Returned k:", k); 
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+ 
+// Write a function that reverses a string. The input string is given as an array of characters s.
+
+// You must do this by modifying the input array in-place with O(1) extra memory.
+
+ 
+
+// Example 1:
+
+// Input: s = ["h","e","l","l","o"]
+// Output: ["o","l","l","e","h"]
+// Example 2:
+
+// Input: s = ["H","a","n","n","a","h"]
+// Output: ["h","a","n","n","a","H"]
+ 
+
+// Constraints:
+
+// 1 <= s.length <= 105
+// s[i] is a printable ascii character.
+
+
+var reverseString = function(s) {
+  let left = 0;
+  let right = s.length - 1;
+
+  console.log("Initial array:", s);
+
+  while (left < right) {
+    console.log("\nBefore swap:");
+    console.log("left index:", left, "value:", s[left]);
+    console.log("right index:", right, "value:", s[right]);
+
+    // swap
+    [s[left], s[right]] = [s[right], s[left]];
+
+    console.log("After swap:", s);
+
+    left++;
+    right--;
+
+    console.log("Move pointers → left:", left, "right:", right);
+  }
+
+  console.log("\nFinal reversed array:", s);
+};
+
+
+let k = reverseString(["h","e","l","l","o"]);
+
+⏱️ Complexity (always mention)
+
+Time: O(n)
+
+Space: O(1)
+
+🔑 Golden rule (yaad rakhna)
+
+In-place likha ho → new array banana mana hai
+
+
+
+----------------------------------------------------------------------------------------------------------
+
+// Best Time to Buy and Sell Stock
+// Easy
+// Topics
+// premium lock icon
+// Companies
+// You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+// You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+// Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+ 
+
+// Example 1:
+
+// Input: prices = [7,1,5,3,6,4]
+// Output: 5
+// Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+// Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+// Example 2:
+
+// Input: prices = [7,6,4,3,1]
+// Output: 0
+// Explanation: In this case, no transactions are done and the max profit = 0.
+ 
+
+// Constraints:
+
+// 1 <= prices.length <= 105
+// 0 <= prices[i] <= 104
+
+var maxProfit = function(prices) {
+  let minPrice = Infinity;
+  let minIndex = -1;
+
+  let maxProfit = 0;
+  let buyIndex = -1;
+  let sellIndex = -1;
+
+  for (let i = 0; i < prices.length; i++) {
+
+    // update minimum (buy day)
+    if (prices[i] < minPrice) {
+      minPrice = prices[i];
+      minIndex = i;
+    }
+
+    // profit if selling today
+    let profit = prices[i] - minPrice;
+
+    if (profit > maxProfit) {
+      maxProfit = profit;
+      buyIndex = minIndex;
+      sellIndex = i;
+    }
+  }
+
+  console.log("Buy at index:", buyIndex, "price:", prices[buyIndex]);
+  console.log("Sell at index:", sellIndex, "price:", prices[sellIndex]);
+  console.log("Max Profit:", maxProfit);
+
+  return maxProfit;
+};
+
+⏱️ Complexity
+
+Time: O(n)
+
+Space: O(1)
+
+🔑 Golden rule
+
+Buy first, then sell
+(min pehle, max baad me)
+
+
+var maxProfit = function(prices) {
+  let minPrice = Infinity;
+  let maxProfit = 0;
+
+  for (let price of prices) {
+    minPrice = Math.min(minPrice, price);
+    maxProfit = Math.max(maxProfit, price - minPrice);
+  }
+
+  return maxProfit;
+};
+
+
+----------------------------------------------------------------------------------------------
+
+🎯 Rule of Thumb (yaad rakhna)
+
+When array has extra space at end → always fill from back
+
+// You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+
+// Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+
+// The final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
+
+// Example 1:
+
+// Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+// Output: [1,2,2,3,5,6]
+// Explanation: The arrays we are merging are [1,2,3] and [2,5,6].
+// The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+// Example 2:
+
+// Input: nums1 = [1], m = 1, nums2 = [], n = 0
+// Output: [1]
+// Explanation: The arrays we are merging are [1] and [].
+// The result of the merge is [1].
+// Example 3:
+
+// Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+// Output: [1]
+// Explanation: The arrays we are merging are [] and [1].
+// The result of the merge is [1].
+// Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+ 
+
+// Constraints:
+
+// nums1.length == m + n
+// nums2.length == n
+// 0 <= m, n <= 200
+// 1 <= m + n <= 200
+// -109 <= nums1[i], nums2[j] <= 109
+ 
+
+// Follow up: Can you come up with an algorithm that runs in O(m + n) time?
+
+var merge = function(nums1, m, nums2, n) {
+
+  // Pointer for last actual element in nums1
+  let i = m - 1;
+
+  // Pointer for last element in nums2
+  let j = n - 1;
+
+  // Pointer for last position in nums1 (extra space)
+  let k = m + n - 1;
+
+  console.log("Initial State:");
+  console.log("nums1:", nums1);
+  console.log("nums2:", nums2);
+  console.log("i:", i, "j:", j, "k:", k);
+  console.log("--------------------------");
+
+  // Jab tak nums2 ke elements bache hain
+  while (j >= 0) {
+
+    console.log(`Comparing nums1[${i}] and nums2[${j}]`);
+
+    // Agar nums1 ka element bada hai
+    if (i >= 0 && nums1[i] > nums2[j]) {
+      console.log(`→ nums1[${i}] = ${nums1[i]} is bigger`);
+      nums1[k] = nums1[i];   // overwrite from back
+      i--;
+    } 
+    // Warna nums2 ka element daalo
+    else {
+      console.log(`→ nums2[${j}] = ${nums2[j]} is bigger or nums1 exhausted`);
+      nums1[k] = nums2[j];
+      j--;
+    }
+
+    console.log(`Placed value at nums1[${k}]`);
+    k--;
+
+    console.log("Current nums1:", nums1);
+    console.log("--------------------------");
+  }
+};
+
+🎯 Interview Explanation (1–2 lines)
+
+“Since nums1 has extra space at the end, I merge from the back using two pointers to avoid overwriting and achieve O(1) space.”
+
+⏱️ Complexity
+
+Time: O(m + n)
+
+Space: O(1)
