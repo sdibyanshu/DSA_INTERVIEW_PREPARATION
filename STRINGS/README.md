@@ -1446,3 +1446,289 @@ var merge = function(nums1, m, nums2, n) {
 Time: O(m + n)
 
 Space: O(1)
+
+
+
+--------------------------------------------------------------------------------------------------------------
+
+// 283. Move Zeroes
+// Easy
+// Topics
+// premium lock icon
+// Companies
+// Hint
+// Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+// Note that you must do this in-place without making a copy of the array.
+
+ 
+
+// Example 1:
+
+// Input: nums = [0,1,0,3,12]
+// Output: [1,3,12,0,0]
+// Example 2:
+
+// Input: nums = [0]
+// Output: [0]
+ 
+
+var moveZeroes = function(nums) {
+   let k = 0; // write pointer for non-zero elements
+
+  // Step 1: Move non-zero elements to front
+  for (let i = 0; i < nums.length; i++) {
+    console.log(`Checking nums[${i}] = ${nums[i]}`);
+
+    if (nums[i] !== 0) {
+      nums[k] = nums[i];
+      console.log(`→ Placing ${nums[i]} at index ${k}`);
+      k++;
+    }
+  }
+    console.log("After moving non-zero:", nums);
+  console.log("k (next index for zero):", k);
+  
+  // Step 2: Fill remaining positions with 0
+  for (let i = k; i < nums.length; i++) {
+    nums[i] = 0;
+    console.log(`→ Filling 0 at index ${i}`);
+  }
+
+  console.log("Final nums:", nums);
+};
+
+
+let k = moveZeroes([0,1,0,3,12]);
+console.log("k" , k)
+
+----------------------------------------------------------------------------------------------------------------
+
+// Given a binary array nums, return the maximum number of consecutive 1's in the array.
+
+ 
+
+// Example 1:
+
+// Input: nums = [1,1,0,1,1,1]
+// Output: 3
+// Explanation: The first two digits or the last three digits are consecutive 1s. The maximum number of consecutive 1s is 3.
+// Example 2:
+
+// Input: nums = [1,0,1,1,0,1]
+// Output: 2
+ 
+
+// Constraints:
+
+// 1 <= nums.length <= 105
+// nums[i] is either 0 or 1.
+ 
+
+var findMaxConsecutiveOnes = function(nums) {
+    let max = 0;
+    let count = 0;
+
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] === 1) {
+            count++;
+            max = Math.max(max, count); // 👈 yahin hona chahiye
+        } else {
+            count = 0;
+        }
+    }
+
+    return max;
+};
+
+
+let k = findMaxConsecutiveOnes([1,1,0,1,1,1]);
+console.log("k" , k)
+
+🎯 One-line Interview Explanation
+
+“I update the maximum whenever I extend a streak of ones.”
+
+🧠 Golden Rule (yaad rakhna)
+
+Maximum ko tab update karo jab value change ho rahi ho
+
+⏱️ Complexity
+
+Time: O(n) ✅
+
+Space: O(1) ✅
+
+-----------------------------------------------------------------------------------------------------
+
+// Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+// Example 1:
+// Input: nums = [3,0,1]
+// Output: 2
+// Explanation:
+// n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
+// Example 2:
+// Input: nums = [0,1]
+// Output: 2
+// Explanation:
+// n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
+// Example 3:
+// Input: nums = [9,6,4,2,3,5,7,0,1]
+// Output: 8
+// Explanation:
+// n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
+// Constraints:
+// n == nums.length
+// 1 <= n <= 104
+// 0 <= nums[i] <= n
+// All the numbers of nums are unique.
+
+
+var missingNumber = function (nums) {
+  const map = new Map();
+
+  // Store numbers from 0 to n
+  for (let i = 0; i <= nums.length; i++) {
+    map.set(i, i);
+  }
+
+  // Remove existing numbers
+  for (let i = 0; i < nums.length; i++) {
+    if (map.has(nums[i])) {
+      map.delete(nums[i]);
+    }
+  }
+
+  // The remaining value is the missing number
+  const result = map.values().next().value;
+  return result;
+};
+
+// Test
+const res = missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1]);
+console.log("Res:", res);
+
+⏱ Complexity (mention in interview)
+
+Time: O(n)
+
+Space: O(n)
+
+
+var missingNumber = function(nums) {
+    let n = nums.length;
+    let expectedSum = (n * (n + 1)) / 2;
+    let actualSum = 0;
+
+    for (let num of nums) {
+        actualSum += num;
+    }
+
+    return expectedSum - actualSum;
+};
+Complexity
+Time: O(n)
+
+Space: O(1)
+
+---------------------------------------------------------------------------------------------------------
+
+// Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+// You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+ 
+
+// Example 1:
+
+// Input: nums = [2,2,1]
+
+// Output: 1
+
+// Example 2:
+
+// Input: nums = [4,1,2,1,2]
+
+// Output: 4
+
+// Example 3:
+
+// Input: nums = [1]
+
+// Output: 1
+
+ 
+
+// Constraints:
+
+// 1 <= nums.length <= 3 * 104
+// -3 * 104 <= nums[i] <= 3 * 104
+// Each element in the array appears twice except for one element which appears only once.
+
+
+var singleNumber = function(nums) {
+    // Step 1: Sort numerically
+    nums.sort((a, b) => a - b);
+
+    // Step 2: Compare in pairs
+    for (let i = 0; i < nums.length; i += 2) {
+        // If next element is different or doesn't exist
+        if (nums[i] !== nums[i + 1]) {
+            return nums[i];
+        }
+    }
+};
+// Test
+const res = singleNumber([2,2,1]);
+console.log("Res:", res);
+
+Metric	Value
+Time	O(n log n) 
+Space	O(1) / O(log n)*
+
+
+
+var singleNumber = function(nums) {
+    nums.sort((a, b) => a - b);
+
+    let left = 0;
+
+    while (left < nums.length) {
+        let right = left + 1;
+
+        if (nums[left] !== nums[right]) {
+            return nums[left];
+        }
+
+        left += 2; // move to next pair
+    }
+};
+
+
+
+var singleNumber = function(nums) {
+    let result = 0;
+
+    for (let num of nums) {
+        result ^= num;
+    }
+
+    return result;
+};
+
+
+Why this works
+
+x ^ x = 0
+
+x ^ 0 = x
+
+Order doesn’t matter
+
+Complexity
+
+Time: O(n) ✅
+
+Space: O(1) ✅
+
+This is the ideal answer.
