@@ -1732,3 +1732,72 @@ Time: O(n) ✅
 Space: O(1) ✅
 
 This is the ideal answer.
+
+
+LINKED LIST
+---------------------------------------------------------------------------------------------------
+
+Given the head of a singly linked list, return the middle node of the linked list.
+
+If there are two middle nodes, return the second middle node.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5]
+Output: [3,4,5]
+Explanation: The middle node of the list is node 3.
+Example 2:
+
+
+Input: head = [1,2,3,4,5,6]
+Output: [4,5,6]
+Explanation: Since the list has two middle nodes with values 3 and 4, we return the second one.
+
+
+💡 Idea (Slow–Fast Pointer)
+
+slow moves 1 step
+
+fast moves 2 steps
+
+When fast reaches the end, slow will be at the middle
+
+For even length, slow automatically lands on the second middle ✔️
+
+✅ JavaScript Solution
+var middleNode = function(head) {
+    let slow = head;
+    let fast = head;
+
+    while (fast !== null && fast.next !== null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    return slow;
+};
+
+🧠 Why this works
+
+Odd length → slow stops exactly at the middle
+
+Even length → slow stops at the second middle (as required)
+
+🕒 Complexity
+
+Time: O(n)
+
+Space: O(1) (no extra memory)
+
+🔍 Dry Run Example
+
+For [1,2,3,4,5,6]:
+
+slow → 1 → 2 → 3 → 4
+fast → 1 → 3 → 5 → null
+
+
+✔️ Returns node 4
