@@ -1736,6 +1736,25 @@ This is the ideal answer.
 
 LINKED LIST
 ---------------------------------------------------------------------------------------------------
+Created a simple Linked list
+function node(data){
+    this.data = data;
+    this.next = null;
+}
+
+var head = new node(5);
+var mid = new node(10);
+var tail = new node(13);
+
+head.next = mid;
+mid.next = tail;
+
+console.log(head);
+
+
+
+
+
 
 Given the head of a singly linked list, return the middle node of the linked list.
 
@@ -1801,3 +1820,312 @@ fast → 1 → 3 → 5 → null
 
 
 ✔️ Returns node 4
+
+--------------------------------------------------------------------------------------------------
+
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+Example 2:
+
+
+Input: head = [1,2]
+Output: [2,1]
+Example 3:
+
+Input: head = []
+Output: []
+ 
+
+Constraints:
+
+The number of nodes in the list is the range [0, 5000].
+-5000 <= Node.val <= 5000
+ 
+
+Follow up: A linked list can be reversed either iteratively or recursively. Could you implement both?
+
+
+
+var reverseList = function(head) {
+    let prev = null;
+    let current = head;
+    
+    while (current !== null) {
+        let next = current.next;  // store next node
+        current.next = prev;      // reverse pointer
+        prev = current;           // move prev forward
+        current = next;           // move current forward
+    }
+    
+    return prev; // new head
+};
+
+
+--------------------------------------------------------------------------------------------------------
+
+// Given a string s and an integer k, 
+// reverse the first k characters for every 2k characters counting from the start of the string.
+
+// If there are fewer than k characters left, reverse all of them.
+// If there are less than 2k but greater than or equal to k characters,
+// then reverse the first k characters and leave the other as original.
+
+ 
+
+// Example 1:
+
+// Input: s = "abcdefg", k = 2
+// Output: "bacdfeg"
+// Example 2:
+
+// Input: s = "abcd", k = 2
+// Output: "bacd"
+ 
+
+// Constraints:
+
+// 1 <= s.length <= 104
+// s consists of only lowercase English letters.
+// 1 <= k <= 104
+
+
+
+
+var reverseStr = function(s, k) {
+
+    // convert string into array for easy swapping
+    let arr = s.split("");
+    let n = arr.length;
+
+    // process string in blocks of 2k
+    for (let i = 0; i < n; i += 2 * k) {
+
+        let left = i;
+
+        // ensure right pointer does not go out of bound
+        let right = Math.min(i + k - 1, n - 1);
+
+        // reverse first k characters using two pointer swap
+        while (left < right) {
+            [arr[left], arr[right]] = [arr[right], arr[left]];
+            left++;
+            right--;
+        }
+    }
+
+    // convert back to string
+    return arr.join("");
+};
+
+console.log(reverseStr("abcdefg", 2)); // bacdfeg
+console.log(reverseStr("abcd", 2));    // bacd
+
+reverseStr("abcdefg", 2);
+
+
+------------------------------------------------------------------------------------------------------------
+
+// A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and 
+// removing all non-alphanumeric characters, it reads the same forward and backward. 
+// Alphanumeric characters include letters and numbers.
+
+// Given a string s, return true if it is a palindrome, or false otherwise.
+
+// Example 1:
+
+// Input: s = "A man, a plan, a canal: Panama"
+// Output: true
+// Explanation: "amanaplanacanalpanama" is a palindrome.
+// Example 2:
+
+// Input: s = "race a car"
+// Output: false
+// Explanation: "raceacar" is not a palindrome.
+// Example 3:
+
+// Input: s = " "
+// Output: true
+// Explanation: s is an empty string "" after removing non-alphanumeric characters.
+// Since an empty string reads the same forward and backward, it is a palindrome.
+ 
+
+// Constraints:
+
+// 1 <= s.length <= 2 * 105
+// s consists only of printable ASCII characters.
+
+var isPalindrome = function(s) {
+
+    let left = 0;
+    let right = s.length - 1;
+
+    while (left < right) {
+
+        // skip non-alphanumeric from left
+        while (left < right && !isAlphaNumeric(s[left])) {
+            left++;
+        }
+
+        // skip non-alphanumeric from right
+        while (left < right && !isAlphaNumeric(s[right])) {
+            right--;
+        }
+
+
+        // compare lowercase characters
+        if (s[left].toLowerCase() !== s[right].toLowerCase()) {
+            return false;
+        }
+
+        left++;
+        right--;
+    }
+
+    console.log("🎉 String is Palindrome");
+    return true;
+};
+
+function isAlphaNumeric(ch) {
+    return ch.toLowerCase() !== ch.toUpperCase() || 
+           (ch >= '0' && ch <= '9');
+}
+
+//   🔥 Real Life Analogy (easy memory trick)
+// Socho:
+// Letters → “shape change” karte hain case change pe
+// (A ↔ a)
+// Digits / symbols → “same rehte hain”
+// (7 ↔ 7, # ↔ #)
+// Bas isi idea pe ye trick kaam karti hai 🙂
+
+
+isPalindrome("A man, a plan, a canal: Panama");
+
+
+--------------------------------------------------------------------------------------------------------------
+
+// You are given a string num, representing a large integer. Return the largest-valued odd integer
+// (as a string) that is a non-empty substring of num, or an empty string "" if no odd integer exists.
+
+// A substring is a contiguous sequence of characters within a string.
+
+ 
+
+// Example 1:
+
+// Input: num = "52"
+// Output: "5"
+// Explanation: The only non-empty substrings are "5", "2", and "52". "5" is the only odd number.
+// Example 2:
+
+// Input: num = "4206"
+// Output: ""
+// Explanation: There are no odd numbers in "4206".
+// Example 3:
+
+// Input: num = "35427"
+// Output: "35427"
+// Explanation: "35427" is already an odd number.
+ 
+
+// Constraints:
+
+// 1 <= num.length <= 105
+// num only consists of digits and does not contain any leading zeros.
+
+var largestOddNumber = function(num) {
+
+    for (let i = num.length - 1; i >= 0; i--) {
+
+        if (Number(num[i]) % 2 === 1) {
+            return num.substring(0, i + 1);
+        }
+    }
+
+    return "";
+};
+
+console.log(largestOddNumber("35427"))
+
+✅ ⭐ Sabse Important Logic (Key Observation)
+
+👉 Koi bhi number odd tab hota hai jab uska LAST digit odd ho
+
+Odd digits hote hain:
+
+1, 3, 5, 7, 9
+
+So hume bas:
+
+🔥 Right side se first odd digit dhundhni hai
+
+Kyuki:
+
+jitna lamba number hoga
+
+utni badi value hogi
+
+Isliye prefix substring hi largest hoga
+
+✅ Example se Samjho
+Example 1
+num = "52"
+
+Right se check:
+
+2 → even
+
+5 → odd ✅
+
+Return:
+
+"5"
+Example 2
+num = "4206"
+
+Right se:
+
+6 even
+
+0 even
+
+2 even
+
+4 even
+
+👉 koi odd hi nahi
+
+Return:
+
+""
+Example 3
+num = "35427"
+
+Right se:
+
+7 odd ✅
+
+Return:
+
+"35427"
+
+Kyuki pura number hi odd hai
+Aur ye largest substring hai.
+
+✅ Interview me Approach Kaise Bolni Hai
+
+Tum confidently bol sakte ho:
+
+🗣️
+“Since number odd hone ka decision last digit pe depend karta hai,
+main string ko right se scan karunga aur first odd digit milte hi
+start se us index tak substring return kar dunga.”
+
+👉 Ye line interviewer ko bahut strong lagegi 💯
