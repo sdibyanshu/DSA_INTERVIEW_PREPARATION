@@ -2129,3 +2129,219 @@ main string ko right se scan karunga aur first odd digit milte hi
 start se us index tak substring return kar dunga.”
 
 👉 Ye line interviewer ko bahut strong lagegi 💯
+
+
+--------------------------------------------------------------------------------------------------
+
+// Write a function to find the longest common prefix string amongst an array of strings.
+
+// If there is no common prefix, return an empty string "".
+
+ 
+
+// Example 1:
+
+// Input: strs = ["flower","flow","flight"]
+// Output: "fl"
+// Example 2:
+
+// Input: strs = ["dog","racecar","car"]
+// Output: ""
+// Explanation: There is no common prefix among the input strings.
+ 
+
+// Constraints:
+
+// 1 <= strs.length <= 200
+// 0 <= strs[i].length <= 200
+// strs[i] consists of only lowercase English letters if it is non-empty.
+
+var longestCommonPrefix = function(strs) {
+    let prefix = strs[0];
+
+    for (let i = 1; i < strs.length; i++) {
+
+        while (strs[i].indexOf(prefix) !== 0) {
+
+            prefix = prefix.slice(0, prefix.length - 1);
+
+            if (prefix === "") {
+
+                return "";
+            }
+        }
+
+    }
+
+    return prefix;
+};
+
+console.log(longestCommonPrefix(["flower","flow","flight"]));
+
+
+
+--------------------------------------------------------------------------------------------------------
+
+// Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+// Example 1:
+
+// Input: s = "anagram", t = "nagaram"
+
+// Output: true
+
+// Example 2:
+
+// Input: s = "rat", t = "car"
+
+// Output: false
+
+// Constraints:
+
+// 1 <= s.length, t.length <= 5 * 104
+// s and t consist of lowercase English letters.
+
+var isAnagram = function(s, t) {
+
+    if (s.length !== t.length) return false;
+
+    let sSorted = s.split('').sort().join('');
+    let tSorted = t.split('').sort().join('');
+
+    return sSorted === tSorted;
+};
+
+console.log(isAnagram("anagram", "nagaram")); // true
+console.log(isAnagram("rat", "car")); // false
+
+
+
+var isAnagram = function(s, t) {
+
+    // if lengths are different → cannot be anagram
+    if (s.length !== t.length) {
+        return false;
+    }
+
+    let map = new Map();
+
+    // build frequency map from string s
+    for (let ch of s) {
+        map.set(ch, (map.get(ch) || 0) + 1);
+    }
+
+    // reduce frequency using string t
+    for (let ch of t) {
+
+        // if character not present → not anagram
+        if (!map.has(ch)) {
+            return false;
+        }
+
+        // decrease count
+        map.set(ch, map.get(ch) - 1);
+
+        // remove key if frequency becomes zero
+        if (map.get(ch) === 0) {
+            map.delete(ch);
+        }
+    }
+
+    // if map becomes empty → valid anagram
+    return map.size === 0;
+};
+
+console.log(isAnagram("anagram", "nagaram"));
+console.log(isAnagram("rat", "car"));
+
+⚠️ But Interview Reality (Important)
+
+Sorting approach complexity:
+
+👉 Time → O(n log n)
+
+HashMap approach:
+
+👉 Time → O(n) (better)
+
+So interviewer usually bolega:
+
+🗣️
+“Can you optimize this?”
+
+Tab tum HashMap / array frequency solution pe switch karo.
+
+1️⃣ Pehle bolo:
+👉 “Simplest approach is sorting”
+
+2️⃣ Fir bolo:
+👉 “Optimal approach is frequency counting in O(n)”
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+// Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+// Example 1:
+// Input: strs = ["eat","tea","tan","ate","nat","bat"]
+// Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+// Explanation:
+// There is no string in strs that can be rearranged to form "bat".
+// The strings "nat" and "tan" are anagrams as they can be rearranged to form each other.
+// The strings "ate", "eat", and "tea" are anagrams as they can be rearranged to form each other.
+// Example 2:
+// Input: strs = [""]
+// Output: [[""]]
+// Example 3:
+// Input: strs = ["a"]
+// Output: [["a"]]
+// Constraints:
+// 1 <= strs.length <= 104
+// 0 <= strs[i].length <= 100
+// strs[i] consists of lowercase English letters.
+
+
+
+var groupAnagrams = function(strs) {
+
+    // Map to store grouped anagrams
+    // key = sorted string
+    // value = array of original strings
+    let map = new Map();
+
+    // loop through each string in input array
+    for (let str of strs) {
+
+        // Step 1: convert string → array
+        // Step 2: sort characters
+        // Step 3: join back to string
+        // This sorted string will be same for all anagrams
+        let key = str.split("").sort().join("");
+
+        // if this key not present → create new group
+        if (!map.has(key)) {
+            map.set(key, []);
+        }
+
+        // push original string into its anagram group
+        map.get(key).push(str);
+    }
+
+    // Map values contain grouped anagrams
+    // convert them into array and return
+    return Array.from(map.values());
+};
+
+
+// test
+console.log(groupAnagrams(["eat","tea","tan","ate","nat","bat"]));
+
+
+👉 n = number of strings
+👉 k = maximum length of a string
+
+🔹 Sorting each string
+
+Sorting takes → O(k log k)
+
+✅ Time Complexity = O(n × k log k) 
